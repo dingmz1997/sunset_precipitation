@@ -36,19 +36,19 @@ def load_temporal_data(data_dir="../data"):
     for name, suffix in intensities.items():
         data[name] = {
             'urban': {
-                'mean': np.load(f"{data_dir}/urban_{suffix}_mean.npy"),
-                'low': np.load(f"{data_dir}/urban_{suffix}_low.npy"),
-                'high': np.load(f"{data_dir}/urban_{suffix}_high.npy")
+                'mean': np.load(f"{data_dir}/urban_{suffix}_mean_50level.npy"),
+                'low': np.load(f"{data_dir}/urban_{suffix}_low_50level.npy"),
+                'high': np.load(f"{data_dir}/urban_{suffix}_high_50level.npy")
             },
             'rural': {
-                'mean': np.load(f"{data_dir}/rural_{suffix}_mean.npy"),
-                'low': np.load(f"{data_dir}/rural_{suffix}_low.npy"),
-                'high': np.load(f"{data_dir}/rural_{suffix}_high.npy")
+                'mean': np.load(f"{data_dir}/rural_{suffix}_mean_50level.npy"),
+                'low': np.load(f"{data_dir}/rural_{suffix}_low_50level.npy"),
+                'high': np.load(f"{data_dir}/rural_{suffix}_high_50level.npy")
             },
             'turban': {  # Urban-only events
-                'mean': np.load(f"{data_dir}/turban_{suffix}_mean.npy"),
-                'low': np.load(f"{data_dir}/turban_{suffix}_low.npy"),
-                'high': np.load(f"{data_dir}/turban_{suffix}_high.npy")
+                'mean': np.load(f"{data_dir}/turban_{suffix}_mean_50level.npy"),
+                'low': np.load(f"{data_dir}/turban_{suffix}_low_50level.npy"),
+                'high': np.load(f"{data_dir}/turban_{suffix}_high_50level.npy")
             }
         }
 
@@ -98,7 +98,7 @@ def get_y_axis_limits(intensity_key, data_type='urban_rural'):
 
     if data_type == 'urban_rural':
         limits = {
-            'low': ((6.8, 9.8), [7, 8, 9]),
+            'low': ((6.8, 9.8), [6.8, 7.8, 8.8, 9.8]),
             'moderate': ((5, 8), [5, 6, 7, 8]),
             'other': ((8, 16), [8, 10, 12, 14, 16]),
             'low_moderate': ((12, 18), [12, 14, 16, 18]),
@@ -106,7 +106,7 @@ def get_y_axis_limits(intensity_key, data_type='urban_rural'):
         }
     else:  # turban
         limits = {
-            'low': ((2.8, 4.2), [3.0, 3.5, 4.0]),
+            'low': ((2.8, 4.2), [2.8, 3.5, 4.2]),
             'moderate': ((0.9, 1.3), [0.9, 1.0, 1.1, 1.2, 1.3]),
             'other': ((0.3, 0.7), [0.3, 0.4, 0.5, 0.6, 0.7]),
             'low_moderate': ((3.5, 5.5), [3.5, 4.0, 4.5, 5.0, 5.5]),
@@ -173,26 +173,26 @@ temporal_stability = pd.DataFrame(
             514,
         ],
         "enhancement_pct": [
-            64.8,
-            63.0,
-            61.3,
-            62.0,
-            61.4,
-            59.8,
-            64.1,
-            61.7,
-            60.8,
-            60.3,
-            59.8,
-            60.0,
-            63.0,
-            58.4,
-            59.9,
-            64.6,
-            63.9,
-            67.3,
-            59.0,
-            63.8,
+            14.6,
+            12.8,
+            13.8,
+            10.6,
+            12.3,
+            11.7,
+            13.4,
+            11.4,
+            12.7,
+            9.7,
+            9.4,
+            10.8,
+            9.7,
+            10.3,
+            11.0,
+            11.5,
+            15.0,
+            15.9,
+            10.6,
+            12.9
         ],
     }
 )

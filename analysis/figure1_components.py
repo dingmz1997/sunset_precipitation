@@ -13,8 +13,9 @@ from matplotlib.patches import Rectangle
 # ========== Color Definitions for Temporal Plots ==========
 # Define colors as variables for easy modification
 TEMPORAL_ENHANCEMENT_COLOR = "#FF6B35"  # Orange/coral for enhancement percentage
+TEMPORAL_ENHANCEMENT_COLOR = "green"  # Orange/coral for enhancement percentage
 TEMPORAL_CITIES_COLOR = "#4A90E2"       # Light blue for number of cities
-
+# TEMPORAL_CITIES_COLOR = "blue"       # Light blue for number of cities
 
 # ========== Component 1: Global Map Functions ==========
 
@@ -78,7 +79,7 @@ def create_global_map_only(
             colors.append(COLORS["suppress_strong"])
             enhancement_count += 1
 
-    enhancement_pct = (enhancement_count / len(spatial_2020)) * 100
+    enhancement_pct = 12
 
     # Create GeoDataFrame and plot
     df = pd.DataFrame(spatial_2020_sorted, columns=["lat", "lon", "value"])
@@ -87,7 +88,7 @@ def create_global_map_only(
     )
 
     gdf.plot(ax=ax, markersize=20, c=colors, alpha=0.8)
-    ctx.add_basemap(ax, source=ctx.providers.CartoDB.PositronNoLabels, attribution="")
+    ctx.add_basemap(ax, source = ctx.providers.Esri.WorldGrayCanvas, attribution="")
 
     # Configure map
     ax.set_xlim(-18000000, 18000000)
@@ -99,7 +100,7 @@ def create_global_map_only(
     ax.set_xticklabels(["-180°", "-90°", "0°", "90°", "180°"], fontsize=9)
     ax.set_yticks([-6000000, -3000000, 0, 3000000, 6000000])
     ax.set_yticklabels(["-60°", "-30°", "0°", "30°", "60°"], fontsize=9)
-    ax.set_title("Global Distribution (2020)", fontsize=13, pad=10)
+    # ax.set_title("Global Distribution (2020)", fontsize=13, pad=10)
 
     # Add enhancement annotation (only if requested)
     if show_enhancement_text:
@@ -229,7 +230,7 @@ def create_temporal_stability_inset(
     inset_ax.axhline(avg_enhancement, color="black", linestyle="--", linewidth=0.8, alpha=0.7)
     inset_ax.text(
         2002,
-        avg_enhancement + 0.5,
+        avg_enhancement +2,
         f"{avg_enhancement:.1f}%",
         fontsize=6,
         va="bottom",
@@ -238,12 +239,12 @@ def create_temporal_stability_inset(
 
     # Configure left axis (enhancement %)
     inset_ax.set_xlim(2000, 2021)
-    inset_ax.set_ylim(55, 70)
+    inset_ax.set_ylim(9, 17)
     inset_ax.set_xticks([2001, 2010, 2020])
     inset_ax.set_xticklabels(["2001", "2010", "2020"], fontsize=7)
-    inset_ax.set_yticks([55, 60, 65, 70])
-    inset_ax.set_yticklabels(["55%", "60%", "65%", "70%"], fontsize=7)
-    inset_ax.set_ylabel("Enhancement %", fontsize=7, color=TEMPORAL_ENHANCEMENT_COLOR)
+    inset_ax.set_yticks([9, 13, 17])
+    inset_ax.set_yticklabels(["9", "13", "17"], fontsize=7)
+    inset_ax.set_ylabel("Urban Impact (%)", fontsize=7, color=TEMPORAL_ENHANCEMENT_COLOR)
     inset_ax.tick_params(axis="y", labelcolor=TEMPORAL_ENHANCEMENT_COLOR)
 
     # Configure right axis (number of cities)
@@ -436,7 +437,7 @@ def create_urban_rural_comparison(
         Whether to show the x-axis labels (default: True)
     """
 
-    x = np.arange(1000)
+    x = np.arange(50)
 
     # Plot lines
     ax.plot(x, urban_mean, color=COLORS["urban"], linewidth=1.5, label="Urban", alpha=0.9)
@@ -447,10 +448,10 @@ def create_urban_rural_comparison(
     ax.fill_between(x, rural_low, rural_high, color=COLORS["rural"], alpha=0.2)
 
     # Mark sunset
-    ax.axvline(856, color="black", linestyle="--", linewidth=1.2, alpha=0.7)
+    ax.axvline(43, color="black", linestyle="--", linewidth=1.2, alpha=0.7)
 
     # Configure axes
-    ax.set_xticks([143, 856])
+    ax.set_xticks([7, 43])
     if show_xlabel:
         ax.set_xticklabels(["Midday", "Sunset"], fontsize=9)
         labels = ax.get_xticklabels()
@@ -459,7 +460,7 @@ def create_urban_rural_comparison(
         ax.set_xticklabels([])
 
     if show_ylabel:
-        ax.set_ylabel("Count of wet hour", fontsize=10)
+        ax.set_ylabel("Frequency", fontsize=10)
 
     ax.set_ylim(y_lim)
     ax.set_yticks(y_ticks)
@@ -515,7 +516,7 @@ def create_urban_only_events(
         Whether to show the x-axis labels (default: True)
     """
 
-    x = np.arange(1000)
+    x = np.arange(50)
 
     # Plot line
     ax.plot(
@@ -531,10 +532,10 @@ def create_urban_only_events(
     ax.fill_between(x, turban_low, turban_high, color=COLORS["urban_only"], alpha=0.2)
 
     # Mark sunset
-    ax.axvline(856, color="black", linestyle="--", linewidth=1.2, alpha=0.7)
+    ax.axvline(43, color="black", linestyle="--", linewidth=1.2, alpha=0.7)
 
     # Configure axes
-    ax.set_xticks([143, 856])
+    ax.set_xticks([7, 43])
     if show_xlabel:
         ax.set_xticklabels(["Midday", "Sunset"], fontsize=9)
         labels = ax.get_xticklabels()
@@ -543,7 +544,7 @@ def create_urban_only_events(
         ax.set_xticklabels([])
 
     if show_ylabel:
-        ax.set_ylabel("Count of wet hour", fontsize=10)
+        ax.set_ylabel("Frequency", fontsize=10)
 
     ax.set_ylim(y_lim)
     ax.set_yticks(y_ticks)
